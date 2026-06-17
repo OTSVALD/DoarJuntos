@@ -1,0 +1,418 @@
+/*
+      Material Design 3 (Google) - estilização moderna com superfícies elevadas,
+      cores dinâmicas, tipografia Roboto e estados de interação claros.
+      Aplica a Heurística de Nielsen nº 8: Estética e design minimalista,
+      mantendo a interface limpa e objetiva para cada uma das funções do Modelo 3C.
+    */
+:root {
+  --primary: #6750a4;
+  --on-primary: #ffffff;
+  --primary-container: #eaddff;
+  --on-primary-container: #21005d;
+  --secondary: #625b71;
+  --on-secondary: #ffffff;
+  --secondary-container: #e8def8;
+  --surface: #fffbfe;
+  --surface-variant: #e7e0ec;
+  --on-surface: #1c1b1f;
+  --on-surface-variant: #49454f;
+  --outline: #79747e;
+  --error: #b3261e;
+  --success: #2e7d32;
+  --shadow: rgba(0, 0, 0, 0.15);
+  --radius: 16px;
+  --radius-sm: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--surface-variant);
+  color: var(--on-surface);
+  line-height: 1.6;
+}
+
+/* Header com navegação */
+header {
+  background-color: var(--surface);
+  box-shadow: 0 2px 6px var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--on-surface);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+nav a:hover,
+nav a:focus {
+  background-color: var(--primary-container);
+  color: var(--on-primary-container);
+  outline: none;
+}
+
+/* Layout principal */
+main {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Cartões seguindo Material Design 3 */
+.card {
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px var(--shadow);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.card-subtitle {
+  font-size: 0.875rem;
+  color: var(--on-surface-variant);
+}
+
+/* Mapa simulado */
+.map-container {
+  width: 100%;
+  height: 280px;
+  background: linear-gradient(135deg, #e0e7ff 0%, #d1e8ff 100%);
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--outline);
+}
+
+.map-point {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-color: var(--primary);
+  border: 3px solid var(--on-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 4px var(--shadow);
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+}
+
+.map-point:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  background-color: var(--error);
+}
+
+.map-point::after {
+  content: attr(data-label);
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--on-surface);
+  color: var(--surface);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.map-point:hover::after {
+  opacity: 1;
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--on-surface-variant);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Formulário de doação */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+}
+
+input,
+select,
+textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--outline);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: var(--surface);
+  color: var(--on-surface);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-container);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--on-primary-container);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-container);
+  color: var(--on-surface);
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary);
+  color: var(--on-secondary);
+}
+
+/* Chat simulado */
+.chat-window {
+  flex: 1;
+  min-height: 220px;
+  max-height: 320px;
+  overflow-y: auto;
+  background-color: var(--surface-variant);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.message {
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  border-radius: 18px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-received {
+  background-color: var(--surface);
+  color: var(--on-surface);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.message-sent {
+  background-color: var(--primary);
+  color: var(--on-primary);
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.message-meta {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.chat-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-controls input {
+  flex: 1;
+}
+
+/* Notificações (feedback visual) */
+.toast-container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.toast {
+  background-color: var(--on-surface);
+  color: var(--surface);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px var(--shadow);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: auto;
+  animation: slideIn 0.3s ease;
+  min-width: 260px;
+}
+
+.toast.success {
+  background-color: var(--success);
+  color: #ffffff;
+}
+
+.toast.error {
+  background-color: var(--error);
+  color: #ffffff;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  main {
+    grid-template-columns: 1fr;
+    margin: 1rem auto;
+  }
+
+  .chat-window {
+    max-height: 260px;
+  }
+}

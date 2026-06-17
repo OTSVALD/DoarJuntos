@@ -1,0 +1,26 @@
+# -----------------------------------------------------------------------------
+# .gitignore - Projeto Web Simples (HTML, CSS, JS)
+# -----------------------------------------------------------------------------
+
+# Dependências e pastas de ambiente (Node.js / npm)
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Configurações locais do editor VS Code
+.vscode/
+*.code-workspace
+
+# Arquivos de sistema operacional (Lixo do Windows/Mac)
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.temp
+
+# Variáveis de ambiente e configurações sensíveis
+.env
+.env.local
