@@ -1,155 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Solução Colaborativa de Doações</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="estilo.css">
-<body>
-  <!--
-    Header com navegação simples e clara.
-    Relação com o Modelo 3C: o menu dá acesso imediato às três funções
-    (Coordenação via mapa, Cooperação via doação, Comunicação via chat).
-    Heurística nº 1: Visibilidade do status do sistema — o usuário sempre
-    sabe em qual seção está pela navegação e pelo título.
-  -->
-  <header>
-    <div class="header-content">
-      <div class="logo" aria-label="Solução Colaborativa de Doações">🤝 DoarJuntos</div>
-      <nav aria-label="Navegação principal">
-        <ul>
-          <li><a href="#Mapa">Mapa</a></li>
-          <li><a href="#Doacao">Doar</a></li>
-          <li><a href="#Chat">Chat</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solução Colaborativa de Doações</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="estilo.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <div class="logo">🤝 DoarJuntos</div>
+        <nav aria-label="Navegação principal">
+          <ul>
+            <li><a href="#mapa">Mapa</a></li>
+            <li><a href="#doacao">Doar</a></li>
+            <li><a href="#chat">Chat</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-  <main>
-    <!--
-      Seção de Mapa: Coordenação (Modelo 3C).
-      Representa a função de Coordenação, permitindo visualizar onde estão
-      os pontos de coleta e organizar a logística das doações.
-      Heurística nº 2: Correspondência entre o sistema e o mundo real —
-      o mapa e os marcadores simbolizam pontos físicos reais de coleta.
-      Heurística nº 8: Estética e design minimalista — apenas os pontos
-      essenciais são exibidos, evitando sobrecarga cognitiva.
-    -->
-    <section id="mapa" class="card">
-      <div>
-        <h2 class="card-title">Mapa de Pontos de Coleta</h2>
-        <p class="card-subtitle">Coordenação — visualize locais próximos para entregar doações.</p>
-      </div>
-      <div class="map-container" role="img" aria-label="Mapa simulado com pontos de coleta">
-        <div class="map-point" style="top: 25%; left: 30%;" data-label="Centro Comunitário"></div>
-        <div class="map-point" style="top: 45%; left: 55%;" data-label="Igreja São João"></div>
-        <div class="map-point" style="top: 65%; left: 40%;" data-label="Escola Municipal"></div>
-        <div class="map-point" style="top: 35%; left: 75%;" data-label="Mercado Solidário"></div>
-      </div>
-      <div class="map-legend">
-        <div class="legend-item">
-          <span class="legend-dot" style="background-color: var(--primary);"></span>
-          <span>Ponto ativo</span>
+    <main>
+      <section id="mapa" class="card">
+        <div>
+          <h2 class="card-title">Mapa de Pontos de Coleta</h2>
+          <p class="card-subtitle">
+            Coordenação — visualize o local para entregar doações.
+          </p>
         </div>
-        <div class="legend-item">
-          <span class="legend-dot" style="background-color: var(--error);"></span>
-          <span>Selecionado / urgente</span>
+        <div
+          class="map-container"
+          role="img"
+          aria-label="Mapa simulado com ponto de coleta único"
+        >
+          <div
+            class="map-point"
+            style="top: 50%; left: 50%"
+            data-label="Sede União Espírita Alagoinhense"
+          ></div>
         </div>
-      </div>
-    </section>
+        <div class="map-legend">
+          <div class="legend-item">
+            <span
+              class="legend-dot"
+              style="background-color: var(--primary)"
+            ></span>
+            <span>Ponto de coleta</span>
+          </div>
+        </div>
 
-    <!--
-      Seção de Doação: Cooperação (Modelo 3C).
-      Representa a função de Cooperação, onde o usuário contribui com itens
-      para a causa coletiva, cadastrando alimentos, itens de higiene ou vestuário.
-      Heurística nº 5: Prevenção de erros — campos obrigatórios e categorias
-      pré-definidas reduzem o risco de envio incorreto.
-      Heurística nº 10: Ajuda e documentação — labels descritivos e placeholder
-      orientam o usuário sem precisar de manual.
-    -->
-    <section id="doacao" class="card">
-      <div>
-        <h2 class="card-title">Cadastrar Doação</h2>
-        <p class="card-subtitle">Cooperação — contribua com alimentos, higiene ou vestuário.</p>
-      </div>
-      <form id="donationForm" novalidate>
-        <div class="form-field">
-          <label for="donorName">Seu nome</label>
+        <div class="ong-card">
+          <div class="ong-card-header">📍 Realização</div>
+          <div class="ong-card-body">
+            <p><strong>UNIÃO ESPÍRITA ALAGOINHENSE</strong></p>
+            <p>CNPJ: 13.645.023/0001-03</p>
+            <p>
+              Endereço: Rua Pracinhas Dionisio e Evilásio, 374 – Centro,
+              Alagoinhas – BA
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="doacao" class="card">
+        <div>
+          <h2 class="card-title">Cadastrar Doação</h2>
+          <p class="card-subtitle">
+            Cooperação — contribua com alimentos, higiene ou vestuário.
+          </p>
+        </div>
+        <form id="donationForm" novalidate>
+          <div class="form-field">
+            <label for="donorName">Seu nome</label>
+            <input
+              type="text"
+              id="donorName"
+              name="donorName"
+              placeholder="Ex: Maria Oliveira"
+              required
+            />
+          </div>
           <div class="form-field checkbox-field">
             <input type="checkbox" id="anonymousDonor" name="anonymousDonor" />
-            <label for="anonymousDonor">Exibir meu nome publicamente como doador</label>
+            <label for="anonymousDonor"
+              >Exibir meu nome publicamente como doador</label
+            >
           </div>
-          <input type="text" id="donorName" name="donorName" placeholder="Ex: Maria Oliveira" required />
-        </div>
-        <div class="form-field">
-          <label for="itemType">Categoria do item</label>
-          <select id="itemType" name="itemType" required>
-            <option value="" disabled selected>Selecione uma categoria</option>
-            <option value="Alimento">Alimento</option>
-            <option value="Higiene">Higiene</option>
-            <option value="Vestuário">Vestuário</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="itemDescription">Descrição dos itens</label>
-          <textarea id="itemDescription" name="itemDescription" placeholder="Ex: 5 kg de arroz, 3 pacotes de sabonete..." required></textarea>
-        </div>
-        <div class="form-field">
-          <label for="dropPoint">Ponto de entrega</label>
-          <select id="dropPoint" name="dropPoint" required>
-            <option value="" disabled selected>Escolha um ponto no mapa</option>
-            <option value="Centro Comunitário">Centro Comunitário</option>
-            <option value="Igreja São João">Igreja São João</option>
-            <option value="Escola Municipal">Escola Municipal</option>
-            <option value="Mercado Solidário">Mercado Solidário</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Confirmar Doação</button>
-      </form>
-    </section>
+          <div class="form-field">
+            <label for="itemType">Categoria do item</label>
+            <select id="itemType" name="itemType" required>
+              <option value="" disabled selected>
+                Selecione uma categoria
+              </option>
+              <option value="Alimento">Alimento</option>
+              <option value="Higiene">Higiene</option>
+              <option value="Vestuário">Vestuário</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="itemDescription">Descrição dos itens</label>
+            <textarea
+              id="itemDescription"
+              name="itemDescription"
+              placeholder="Ex: 5 kg de arroz..."
+              required
+            ></textarea>
+          </div>
+          <div class="form-field">
+            <label for="dropPoint">Ponto de entrega</label>
+            <select id="dropPoint" name="dropPoint" required>
+              <option value="Sede União Espírita Alagoinhense" selected>
+                Sede União Espírita Alagoinhense
+              </option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Confirmar Doação
+          </button>
+        </form>
+      </section>
 
-    <!--
-      Seção de Chat: Comunicação (Modelo 3C).
-      Representa a função de Comunicação, permitindo que doadores e
-      coordenadores conversem para alinhar entregas, horários e necessidades.
-      Heurística nº 1: Visibilidade do status do sistema — mensagens próprias
-      e de terceiros são claramente diferenciadas por cor e posição.
-      Heurística nº 7: Flexibilidade e eficiência de uso — respostas rápidas
-      pré-definidas ajudam a acelerar a comunicação.
-    -->
-    <section id="chat" class="card">
-      <div>
-        <h2 class="card-title">Chat de Entregas</h2>
-        <p class="card-subtitle">Comunicação — alinhe detalhes com os pontos de coleta.</p>
-      </div>
-      <div id="chatWindow" class="chat-window" aria-live="polite" aria-label="Mensagens do chat">
-        <div class="message message-received">
-          <strong>Coordenador:</strong> Olá! Precisamos de doações de higiene para o Centro Comunitário. Consegue ajudar?
-          <span class="message-meta">10:30</span>
+      <section id="chat" class="card">
+        <div>
+          <h2 class="card-title">Chat de Entregas</h2>
+          <p class="card-subtitle">
+            Comunicação — alinhe detalhes com os pontos de coleta.
+          </p>
         </div>
-      </div>
-      <div class="chat-controls">
-        <input type="text" id="chatInput" placeholder="Digite sua mensagem..." aria-label="Nova mensagem" />
-        <button id="chatSend" class="btn btn-primary">Enviar</button>
-      </div>
-      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-        <button type="button" class="btn btn-secondary" onclick="sendQuickReply('Posso levar amanhã às 14h.')">📅 Horário</button>
-        <button type="button" class="btn btn-secondary" onclick="sendQuickReply('Vou doar itens de higiene.')">🧼 Doação</button>
-        <button type="button" class="btn btn-secondary" onclick="sendQuickReply('Preciso do endereço exato.')">📍 Endereço</button>
-      </div>
-    </section>
-  </main>
+        <div
+          id="chatWindow"
+          class="chat-window"
+          aria-live="polite"
+          aria-label="Mensagens do chat"
+        >
+          <div class="message message-received">
+            <strong>Coordenador:</strong> Olá! Precisamos de doações de higiene
+            para a Sede. Consegue ajudar?
+            <span class="message-meta">10:30</span>
+          </div>
+        </div>
+        <div class="chat-controls">
+          <input
+            type="text"
+            id="chatInput"
+            placeholder="Digite sua mensagem..."
+            aria-label="Nova mensagem"
+          />
+          <button id="chatSend" class="btn btn-primary">Enviar</button>
+        </div>
+        <div class="quick-replies">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="sendQuickReply('Posso levar amanhã às 14h.')"
+          >
+            📅 Horário
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="sendQuickReply('Vou doar itens de higiene.')"
+          >
+            🧼 Doação
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="sendQuickReply('Preciso do endereço exato.')"
+          >
+            📍 Endereço
+          </button>
+        </div>
+      </section>
+    </main>
 
-  <!--
-    Container de notificações (toasts).
-    Heurística nº 1: Visibilidade do status do sistema e
-    Heurística nº 5: Prevenção de erros — o usuário recebe feedback
-    imediato e visual após cada ação importante, confirmando sucesso ou alertando erros.
-  -->
-  <div id="toastContainer" class="toast-container"></div>
-
-  <script src="script.js"></script>
-</body>
+    <div id="toastContainer" class="toast-container"></div>
+    <script src="script.js"></script>
+  </body>
 </html>

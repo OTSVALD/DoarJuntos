@@ -1,128 +1,165 @@
-// ============================================================
-// Solução Colaborativa de Doações — DoarJuntos
-// Funcionalidades: Chat, Doações com Anonimato, Notificações
-// ============================================================
+(function () {
+  "use strict";
 
-// --- Chat ---
-const chatInput = document.getElementById("chatInput");
-const chatSend = document.getElementById("chatSend");
-const chatWindow = document.getElementById("chatWindow");
-
-function addMessage(text, type = "sent") {
-  const msg = document.createElement("div");
-  msg.className = `message message-${type}`;
-  const now = new Date();
-  const time = now.toLocaleTimeString("pt-BR", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  msg.innerHTML = `<strong>Você:</strong> ${text}<span class="message-meta">${time}</span>`;
-  chatWindow.appendChild(msg);
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-}
-
-chatSend.addEventListener("click", () => {
-  const text = chatInput.value.trim();
-  if (text) {
-    addMessage(text);
-    chatInput.value = "";
-  }
-});
-
-chatInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") chatSend.click();
-});
-
-function sendQuickReply(text) {
-  addMessage(text);
-}
-
-// --- Doações com Anonimato ---
-const donationForm = document.getElementById("donationForm");
-const anonymousCheckbox = document.getElementById("anonymousDonor");
-
-// Criar seção de doações recentes
-const doacaoSection = document.getElementById("doacao");
-const recentDonationsDiv = document.createElement("div");
-recentDonationsDiv.id = "recentDonations";
-recentDonationsDiv.className = "recent-donations";
-recentDonationsDiv.innerHTML = `
-  <h3 class="recent-donations-title">Doações Recentes</h3>
-  <div id="donationList" class="donation-list"></div>
-`;
-doacaoSection.appendChild(recentDonationsDiv);
-
-let donations = [];
-
-donationForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const donorName = document.getElementById("donorName").value.trim();
-  const isAnonymous = !anonymousCheckbox.checked; // padrão: anônimo
-  const itemType = document.getElementById("itemType").value;
-  const itemDescription = document
-    .getElementById("itemDescription")
-    .value.trim();
-  const dropPoint = document.getElementById("dropPoint").value;
-
-  if (!donorName || !itemType || !itemDescription || !dropPoint) {
-    showToast("Preencha todos os campos obrigatórios.", "error");
-    return;
+  function showToast(message, type) {
+    var container = document.getElementById("toastContainer");
+    if (!container) return;
+    var toast = document.createElement("div");
+    toast.className = "toast" + (type ? " toast-" + type : "");
+    toast.textContent = message;
+    container.appendChild(toast);
+    void toast.offsetWidth;
+    toast.classList.add("show");
+    setTimeout(function () {
+      toast.classList.remove("show");
+      setTimeout(function () {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, 3500);
   }
 
-  const displayName = isAnonymous ? "Doador Anônimo" : donorName;
+  function nowTime() {
+    var d = new Date();
+    return (
+      String(d.getHours()).padStart(2, "0") +
+      ":" +
+      String(d.getMinutes()).padStart(2, "0")
+    );
+  }
 
-  const donation = {
-    name: displayName,
-    type: itemType,
-    description: itemDescription,
-    point: dropPoint,
-    date: new Date().toLocaleDateString("pt-BR"),
+  function appendMessage(text, type, sender) {
+    var chatWindow = document.getElementById("chatWindow");
+    if (!chatWindow) return;
+    var msg = document.createElement("div");
+    msg.className = "message message-" + (type || "sent");
+    if (type === "system") {
+      msg.textContent = text;
+    } else {
+      var strong = document.createElement("strong");
+      strong.textContent = (sender || "Você") + ": ";
+      msg.appendChild(strong);
+      msg.appendChild(document.createTextNode(text));
+    }
+    var meta = document.createElement("span");
+    meta.className = "message-meta";
+    meta.textContent = nowTime();
+    msg.appendChild(meta);
+    chatWindow.appendChild(msg);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
+
+  // Mapa - clique no ponto
+  function initMapPoints() {
+    document.querySelectorAll(".map-point").forEach(function (point) {
+      point.addEventListener("click", function () {
+        showToast(
+          "📍 Sede União Espírita Alagoinhense — Rua Pracinhas Dionisio e Evilásio, 374 – Centro, Alagoinhas – BA",
+          "success",
+        );
+      });
+    });
+  }
+
+  // Formulário
+  function initDonationForm() {
+    var form = document.getElementById("donationForm");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var donorName = document.getElementById("donorName");
+      var anonymous = document.getElementById("anonymousDonor");
+      var itemType = document.getElementById("itemType");
+      var itemDescription = document.getElementById("itemDescription");
+      var dropPoint = document.getElementById("dropPoint");
+
+      if (!donorName.value.trim()) {
+        showToast("Informe seu nome para continuar.", "error");
+        donorName.focus();
+        return;
+      }
+      if (!itemType.value) {
+        showToast("Selecione a categoria do item.", "error");
+        itemType.focus();
+        return;
+      }
+      if (!itemDescription.value.trim()) {
+        showToast("Descreva os itens que vai doar.", "error");
+        itemDescription.focus();
+        return;
+      }
+
+      var displayDonor = anonymous.checked
+        ? donorName.value.trim()
+        : "Doador anônimo";
+      showToast(
+        "Doação confirmada! " +
+          displayDonor +
+          " doou " +
+          itemType.value +
+          " para " +
+          dropPoint.value +
+          ".",
+        "success",
+      );
+      appendMessage(
+        "🟢 Nova doação: " +
+          itemType.value +
+          " — " +
+          itemDescription.value.trim() +
+          " | Entrega: " +
+          dropPoint.value +
+          " | Doador: " +
+          displayDonor,
+        "system",
+      );
+      form.reset();
+      if (dropPoint.options.length > 0) dropPoint.selectedIndex = 0;
+    });
+  }
+
+  // Chat
+  function initChat() {
+    var chatInput = document.getElementById("chatInput");
+    var chatSend = document.getElementById("chatSend");
+    if (!chatInput || !chatSend) return;
+    function sendMessage() {
+      var text = chatInput.value.trim();
+      if (!text) return;
+      appendMessage(text, "sent", "Você");
+      chatInput.value = "";
+      chatInput.focus();
+      setTimeout(function () {
+        appendMessage(
+          "Recebido! Obrigado pela colaboração. Estamos na Sede União Espírita Alagoinhense.",
+          "received",
+          "Coordenador",
+        );
+      }, 900);
+    }
+    chatSend.addEventListener("click", sendMessage);
+    chatInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  }
+
+  window.sendQuickReply = function (text) {
+    if (!text) return;
+    appendMessage(text, "sent", "Você");
+    setTimeout(function () {
+      appendMessage(
+        "Anotado! Vamos organizar a entrega na Sede União Espírita Alagoinhense.",
+        "received",
+        "Coordenador",
+      );
+    }, 800);
   };
 
-  donations.unshift(donation);
-  renderDonations();
-  donationForm.reset();
-  anonymousCheckbox.checked = false; // volta ao padrão (anônimo)
-  showToast("Doação cadastrada com sucesso!", "success");
-});
-
-function renderDonations() {
-  const list = document.getElementById("donationList");
-  if (donations.length === 0) {
-    list.innerHTML =
-      '<p class="donation-empty">Nenhuma doação registrada ainda.</p>';
-    return;
-  }
-
-  list.innerHTML = donations
-    .map(
-      (d) => `
-    <div class="donation-card">
-      <div class="donation-card-header">
-        <strong class="donation-name">${d.name}</strong>
-        <span class="donation-date">${d.date}</span>
-      </div>
-      <div class="donation-tags">
-        <span class="tag tag-category">${d.type}</span>
-        <span class="tag tag-point">📍 ${d.point}</span>
-      </div>
-      <p class="donation-description">${d.description}</p>
-    </div>
-  `,
-    )
-    .join("");
-}
-
-// Inicializa a lista vazia
-renderDonations();
-
-// --- Notificações (Toast) ---
-function showToast(message, type = "success") {
-  const container = document.getElementById("toastContainer");
-  const toast = document.createElement("div");
-  toast.className = `toast toast-${type}`;
-  toast.textContent = message;
-  container.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-}
+  document.addEventListener("DOMContentLoaded", function () {
+    initMapPoints();
+    initDonationForm();
+    initChat();
+  });
+})();
